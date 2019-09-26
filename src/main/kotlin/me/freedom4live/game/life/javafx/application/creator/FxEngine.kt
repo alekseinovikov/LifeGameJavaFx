@@ -2,6 +2,7 @@ package me.freedom4live.game.life.javafx.application.creator
 
 import javafx.scene.Group
 import javafx.scene.Scene
+import javafx.scene.shape.Rectangle
 import javafx.stage.Stage
 import me.freedom4live.game.life.javafx.configuration.ConfigurationProvider
 import org.springframework.stereotype.Component
@@ -14,6 +15,8 @@ class FxEngine(private val configurationProvider: ConfigurationProvider) : Engin
         val group = Group()
         val rootScene = createAndConfigureRootScene(group)
         configureAndRunMainStage(stage, rootScene)
+        createSquares(group)
+        //testSquares(group)
     }
 
     private fun createAndConfigureRootScene(group: Group): Scene {
@@ -27,18 +30,28 @@ class FxEngine(private val configurationProvider: ConfigurationProvider) : Engin
         stage.show()
     }
 
+    private fun testSquares(group: Group) {
+        val r1 = Rectangle(10.0, 10.0, 10.0, 10.0)
+        val r2 = Rectangle(100.0, 100.0, 10.0, 10.0)
+
+        group.children.add(r1)
+        group.children.add(r2)
+    }
+
     private fun createSquares(group: Group) {
         var x = 0
         var y = 0
 
         for (w in 0..weightSquareCount) {
             for (h in 0..heightSquareCount) {
-                group.
+                val rectangle = Rectangle(x.toDouble(), y.toDouble(), squareWeight-1, squareHeight-1)
 
+                group.children.add(rectangle)
                 y += squareHeight.toInt()
             }
 
             x += squareWeight.toInt()
+            y = 0
         }
     }
 
