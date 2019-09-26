@@ -5,6 +5,8 @@ plugins {
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
+
+    id("org.openjfx.javafxplugin") version "0.0.8"
 }
 
 group = "me.freedom4live.game.life"
@@ -27,4 +29,9 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "1.8"
     }
+}
+
+javafx {
+    version = "11.0.2"
+    modules("javafx.controls")
 }
