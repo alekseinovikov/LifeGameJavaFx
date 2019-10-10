@@ -73,13 +73,54 @@ class GameEngineImpl(private val configurationProvider: ConfigurationProvider) :
     }
 
     private fun calculateNextStep() {
-        val yCells = currentState.getCells()
-        for (y in 0..yCells.size-1) {
-            val xCells = yCells[y]
-            for (x in 0..xCells.size-1) {
+        val newCells = ArrayList<List<Cell>>()
+        val currentCells = currentState.getCells()
 
+        val yCells = currentState.getCells()
+        for (y in yCells.indices) {
+            val xCells = yCells[y]
+
+            val newXCells = ArrayList<Cell>()
+            for (x in xCells.indices) {
+                val isAlive = checkAliveCell(currentCells, x, y)
+
+                newXCells.add(Cell.create(isAlive))
             }
+
+            newCells.add(newXCells)
         }
+
+        currentState = Field.create(newCells)
+    }
+
+    private fun checkAliveCell(currentCells: List<List<Cell>>, x: Int, y: Int): Boolean {
+        val liveNeighborsCount = countAliveNeughbors(currentCells, x, y)
+        return if (currentCells[y][x].isAlive()) checkForAlive(liveNeighborsCount) else checkForDead(liveNeighborsCount)
+    }
+
+    private fun checkForDead(liveNeighborsCount: Int): Boolean {
+        return liveNeighborsCount == 3
+    }
+
+    private fun checkForAlive(liveNeighborsCount: Int): Boolean {
+        return liveNeighborsCount == 2 || liveNeighborsCount == 3
+    }
+
+    private fun countAliveNeughbors(currentCells: List<List<Cell>>, x: Int, y: Int): Int {
+        var counter = 0
+
+        if (x > 0 && y > 0 && currentCells[y - 1][x - 1].isAlive()) counter++ // -1,-1
+        if (y > 0 && currentCells[y - 1][x].isAlive()) counter++ // 0,-1
+        if (y > 0 && x < currentCells[y - 1].size - 1 && currentCells[y - 1][x + 1].isAlive()) counter++ // +1,-1
+
+        if (x > 0 && currentCells[y][x - 1].isAlive()) counter++ //-1,0
+        if (x < currentCells[y].size - 1 && currentCells[y][x + 1].isAlive()) counter++ //+1,0
+
+        if (x > 0 && y < currentCells.size - 1 && currentCells[y + 1][x - 1].isAlive()) counter++ //-1,+1
+        if (y < currentCells.size - 1 && currentCells[y + 1][x].isAlive()) counter++ //0,+1
+        if (y < currentCells.size - 1 && x < currentCells[y + 1].size - 1 && currentCells[y + 1][x + 1].isAlive()) counter++ //+1, +1
+
+        return counter
     }
 
 }
