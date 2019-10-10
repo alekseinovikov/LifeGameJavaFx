@@ -2,7 +2,8 @@ package me.freedom4live.game.life.javafx.application
 
 import javafx.application.Application
 import javafx.stage.Stage
-import me.freedom4live.game.life.javafx.application.creator.Engine
+import me.freedom4live.game.life.javafx.engine.GameEngine
+import me.freedom4live.game.life.javafx.fx.DrawEngine
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
@@ -11,18 +12,24 @@ import org.springframework.stereotype.Component
 open class ApplicationRunner : CommandLineRunner, Application() {
 
     @Autowired
-    lateinit var engineInjection: Engine
+    lateinit var drawEngineInjection: DrawEngine
+
+    @Autowired
+    lateinit var gameEngineInjection: GameEngine
 
     companion object {
-        lateinit var engine: Engine
+        lateinit var drawEngine: DrawEngine
+        lateinit var gameEngine: GameEngine
     }
 
     override fun start(primaryStage: Stage?) {
-        engine.start(primaryStage!!)
+        drawEngine.start(primaryStage!!)
+        gameEngine.run(drawEngine)
     }
 
     override fun run(vararg args: String?) {
-        engine = engineInjection
+        drawEngine = drawEngineInjection
+        gameEngine = gameEngineInjection
         launch(*args)
     }
 

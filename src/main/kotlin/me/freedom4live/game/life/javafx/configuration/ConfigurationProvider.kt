@@ -6,10 +6,16 @@ interface ConfigurationProvider {
 
     fun squareHeight(): Double
 
+    fun squareBorderSize(): Double
+
     fun windowTitle(): String
 
     fun windowHeight(): Double
 
     fun windowWeight(): Double
+
+    fun horizontalFieldSize(): Int
+
+    fun verticalFieldSize(): Int
 
 }

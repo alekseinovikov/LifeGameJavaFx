@@ -11,4 +11,6 @@ class ObjectsConfiguration {
 
     lateinit var squareHeight: Integer
 
+    lateinit var squareBorderSize: Integer
+
 }
