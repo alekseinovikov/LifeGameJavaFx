@@ -13,4 +13,6 @@ class ObjectsConfiguration {
 
     lateinit var squareBorderSize: Integer
 
+    lateinit var initCellAlivePercentage: Integer
+
 }

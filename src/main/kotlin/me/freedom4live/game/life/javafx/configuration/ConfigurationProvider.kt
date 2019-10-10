@@ -18,4 +18,8 @@ interface ConfigurationProvider {
 
     fun verticalFieldSize(): Int
 
+    fun frameTimerMilliSeconds(): Int
+
+    fun initCellAliveProbabilityPercents(): Int
+
 }

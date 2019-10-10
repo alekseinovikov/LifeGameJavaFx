@@ -27,6 +27,11 @@ open class ApplicationRunner : CommandLineRunner, Application() {
         gameEngine.run(drawEngine)
     }
 
+    override fun stop() {
+        super.stop()
+        gameEngine.stop()
+    }
+
     override fun run(vararg args: String?) {
         drawEngine = drawEngineInjection
         gameEngine = gameEngineInjection

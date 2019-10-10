@@ -1,5 +1,6 @@
 package me.freedom4live.game.life.javafx.fx
 
+import javafx.application.Platform
 import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.paint.Color
@@ -18,6 +19,8 @@ class FxDrawEngine(private val configurationProvider: ConfigurationProvider) : D
     private val BLACK = Color.BLACK
 
     override fun start(stage: Stage) {
+        Platform.setImplicitExit(true)
+
         val group = Group()
         val rootScene = createAndConfigureRootScene(group)
         configureAndRunMainStage(stage, rootScene)
@@ -26,6 +29,10 @@ class FxDrawEngine(private val configurationProvider: ConfigurationProvider) : D
     }
 
     override fun draw(field: Field) {
+        Platform.runLater { drawInternal(field) }
+    }
+
+    private fun drawInternal(field: Field) {
         squareGroup.children.clear()
 
         var y = 0
