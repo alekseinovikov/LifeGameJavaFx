@@ -47,7 +47,7 @@ class GameEngineImpl(private val configurationProvider: ConfigurationProvider) :
     private fun getRandomCellAliveValue(): Boolean {
         val percentage = configurationProvider.initCellAliveProbabilityPercents()
         val randomValue = Random.nextInt(100)
-        return randomValue > percentage
+        return randomValue < percentage
     }
 
     private fun scheduleTimer(drawEngine: DrawEngine) {
@@ -74,9 +74,9 @@ class GameEngineImpl(private val configurationProvider: ConfigurationProvider) :
 
     private fun calculateNextStep() {
         val yCells = currentState.getCells()
-        for (y in 0..yCells.size) {
+        for (y in 0..yCells.size-1) {
             val xCells = yCells[y]
-            for (x in 0..xCells.size) {
+            for (x in 0..xCells.size-1) {
 
             }
         }
